@@ -15,6 +15,11 @@ public class ProductCommonService {
 	@Autowired
 	private ProductCommonMapper productCommonMapper;
 	
+	// 상품 상세보기 
+	public ProductCommon getProductByProductCommon(int productCommonNo){
+		return productCommonMapper.selectProductByProductCommon(productCommonNo);
+	}
+	
 	// 카테고리별 상품 리스트
 	public Map<String, Object> getProductCommonListByCategoryNo(int categoryNo, int currentPage, String searchWord){
 		final int ROW_PER_PAGE = 10;

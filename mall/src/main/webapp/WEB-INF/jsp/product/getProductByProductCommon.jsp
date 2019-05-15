@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>BOARD LIST(spring mvc + mybatis 방식)</title>
+<title>PRODUCT(spring mvc + mybatis 방식)</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -24,43 +24,47 @@
 <body>
 <div class="container">
 	<div><a class="btn btn-dark" href="${pageContext.request.contextPath}/">홈으로</a></div>
-    <h1>PRODUCT COMMON LIST(spring mvc + mybatis 방식)</h1>
-    <div>전체행의 수 : ${count}</div>
+    <h1>PRODUCT (spring mvc + mybatis 방식)</h1>
     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>product_common_name</th>
-                <th>product_common_price</th>
-                <th>product_common_description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="pcl" items="${productCommonList}">
-                <tr>
-                    <td><a href="${pageContext.request.contextPath}/product/getProductByProductCommon?productCommonNo=${pcl.productCommonNo}">${pcl.productCommonName}</a></td>
-                    <td>${pcl.productCommonPrice}</td>
-                    <td>${pcl.productCommonDescription}</td>
-                </tr>
-            </c:forEach>
-        </tbody>
+        <tr>
+			<th>product_common_name</th>
+			<td>${productCommon.productCommonName}</td>
+		</tr>
+		<tr>
+			<th>product_common_price</th>
+			<td>${productCommon.productCommonPrice}</td>
+		</tr>
+		<tr>
+			<th>product_common_description</th>
+			<td>${productCommon.productCommonDescription}</td>
+		</tr>
     </table>
     <form id="searchForm" action="${pageContext.request.contextPath}/product/getProductListByCategory" method="get">
     	<input type="hidden" name="categoryNo" value="${categoryNo}">
-    	productName 검색어 : <input type="text" name="searchWord">
-    	<button id="searchButton" type="button">검색</button>
+		<div>
+			<select name="">
+				<option value="">-[필수]수량 선택-</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+			<select name="color">
+				<option value="">-[필수]Color 선택-</option>
+				<c:forEach var="p" items="${productCommon.products}" >
+					<option value="${p.productColor}">${p.productColor}</option>
+					
+				</c:forEach>
+			</select>
+			<select name="size">
+				<option value="">-[필수]Size 선택-</option>
+				<option value="S">S</option>
+				<option value="M">M</option>
+				<option value="L">L</option>
+			</select>
+		</div>	
+    	<button id="orderButton" type="button">주문</button>
+    	<button id="cartButton" type="button">장바구니</button>
     </form>
-    <ul class="pager">
-        <c:if test="${currentPage > 1}">
-            <li class="previous">
-            	<a href="${pageContext.request.contextPath}/product/getProductListByCategory?categoryNo=${categoryNo}&currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a>
-            </li>
-        </c:if>
-        <c:if test="${currentPage < lastPage}">
-            <li class="next">
-            	<a href="${pageContext.request.contextPath}/product/getProductListByCategory?categoryNo=${categoryNo}&currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a>
-            </li>
-        </c:if>
-    </ul>
 </div>
 </body>
 </html>

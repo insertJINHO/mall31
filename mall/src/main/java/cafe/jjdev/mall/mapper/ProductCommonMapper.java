@@ -12,7 +12,7 @@ public interface ProductCommonMapper {
 	// 카테고리별 상품 갯수 	
 	public int selectProductCommonCountByCategoryNo(Map<String, Object> map);
 	// 2. 상품 상세보기 
-	public ProductCommon selectProductCommonByCategory(int productCommonNo);
+	public ProductCommon selectProductByProductCommon(int productCommonNo);
 	// 1. 카테고리별 상품 리스트
 	public List<ProductCommon> selectProductCommonListByCategoryNo(Map<String, Object> map);
 }
