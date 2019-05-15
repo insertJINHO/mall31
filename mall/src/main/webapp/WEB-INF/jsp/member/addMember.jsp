@@ -25,7 +25,7 @@
 		        //memberid 를 param.
 		        var memberId = $("#memberId").val(); 
 		        $.ajax({
-		            async: true,
+		            async: false,
 		            type : 'POST',
 		            data : memberId,
 		            url : "/member/idCheck",

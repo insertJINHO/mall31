@@ -1,6 +1,8 @@
 package cafe.jjdev.mall.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cafe.jjdev.mall.mapper.ProductCommonMapper;
+import cafe.jjdev.mall.vo.Product;
 import cafe.jjdev.mall.vo.ProductCommon;
 
 @Service
@@ -17,9 +20,12 @@ public class ProductCommonService {
 	
 	// 상품 상세보기 
 	public ProductCommon getProductByProductCommon(int productCommonNo){
-		return productCommonMapper.selectProductByProductCommon(productCommonNo);
+		ProductCommon productCommon =productCommonMapper.selectProductByProductCommon(productCommonNo);
+		List<Product> products = productCommon.getProducts();
+		List<Product> duplicateRemoveList = new ArrayList<Product>(new LinkedHashSet<Product>(products));
+		System.out.println("ProductCommonService.getProductByProductCommon duplicateRemoveList : "+duplicateRemoveList);
+		return productCommon;
 	}
-	
 	// 카테고리별 상품 리스트
 	public Map<String, Object> getProductCommonListByCategoryNo(int categoryNo, int currentPage, String searchWord){
 		final int ROW_PER_PAGE = 10;

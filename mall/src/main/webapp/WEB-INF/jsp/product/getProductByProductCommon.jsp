@@ -13,13 +13,6 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script type="text/javascript">
-	$(function(){
-		$("#searchButton").click(function(){
-			$("#searchForm").submit();
-		});
-	});
-</script>
 </head>
 <body>
 <div class="container">
@@ -39,27 +32,20 @@
 			<td>${productCommon.productCommonDescription}</td>
 		</tr>
     </table>
-    <form id="searchForm" action="${pageContext.request.contextPath}/product/getProductListByCategory" method="get">
+    <form id="searchForm" method="get">
     	<input type="hidden" name="categoryNo" value="${categoryNo}">
 		<div>
-			<select name="">
-				<option value="">-[필수]수량 선택-</option>
+			<select name="productColor" id="productColor">
+				<option value="">-[필수] 선택-</option>
+				<c:forEach var="p" items="${productCommon.products}" >
+					<option value="${p.productColor}, ${p.productSize}">${p.productColor}, ${p.productSize}</option>
+				</c:forEach>
+			</select>
+			<select name="productSize">
+				<option value="">-[필수] 선택-</option>
 				<option value="1">1</option>
 				<option value="2">2</option>
 				<option value="3">3</option>
-			</select>
-			<select name="color">
-				<option value="">-[필수]Color 선택-</option>
-				<c:forEach var="p" items="${productCommon.products}" >
-					<option value="${p.productColor}">${p.productColor}</option>
-					
-				</c:forEach>
-			</select>
-			<select name="size">
-				<option value="">-[필수]Size 선택-</option>
-				<option value="S">S</option>
-				<option value="M">M</option>
-				<option value="L">L</option>
 			</select>
 		</div>	
     	<button id="orderButton" type="button">주문</button>
