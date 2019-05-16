@@ -9,6 +9,8 @@ import cafe.jjdev.mall.vo.ProductCommon;
 
 @Mapper
 public interface ProductCommonMapper {
+	// 상품 색상별 사이즈 검색
+	public List<Integer> selectProductSizeByColor(Map<String, Object> map);
 	// 카테고리별 상품 갯수 	
 	public int selectProductCommonCountByCategoryNo(Map<String, Object> map);
 	// 2. 상품 상세보기 

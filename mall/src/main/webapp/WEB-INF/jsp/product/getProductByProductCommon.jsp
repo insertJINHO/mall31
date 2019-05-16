@@ -6,13 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>PRODUCT(spring mvc + mybatis 방식)</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("#productColor").change(function(){
+			console.log('productColor change 테스트');
+			$("#optionForm").submit();
+		});
+		$("#productSize").change(function(){
+			console.log('productSize change 테스트');
+			$("#optionForm").submit();
+		});
+	});
+</script>
 </head>
 <body>
 <div class="container">
@@ -32,25 +38,38 @@
 			<td>${productCommon.productCommonDescription}</td>
 		</tr>
     </table>
-    <form id="searchForm" method="get">
-    	<input type="hidden" name="categoryNo" value="${categoryNo}">
+    <form id="optionForm" action="${pageContext.request.contextPath}/product/getProductByProductCommon" method="get">
+    	<input type="hidden" name="productCommonNo" value="${productCommon.productCommonNo}">
 		<div>
+			<c:set var="color" value="color"></c:set>
 			<select name="productColor" id="productColor">
-				<option value="">-[필수] 선택-</option>
-				<c:forEach var="p" items="${productCommon.products}" >
-					<option value="${p.productColor}, ${p.productSize}">${p.productColor}, ${p.productSize}</option>
+				<option value="">-[필수] Color 선택-</option>
+				<c:forEach var="product" items="${productCommon.products}" >
+					<c:if test="${product.productColor ne color}">
+	        			<option value="${product.productColor}" <c:if test="${productColor==product.productColor}">selected</c:if>>${product.productColor}</option>
+	        			<c:set var="color" value="${product.productColor}"></c:set>
+	        		</c:if>
 				</c:forEach>
 			</select>
 			<select name="productSize">
-				<option value="">-[필수] 선택-</option>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
+				<option value="">-[필수] Size 선택-</option>
+				<c:forEach var="productSize" items="${productSize}" >
+						<option value="${productSize}">${productSize}</option>
+				</c:forEach>
 			</select>
-		</div>	
-    	<button id="orderButton" type="button">주문</button>
-    	<button id="cartButton" type="button">장바구니</button>
+		</div>
     </form>
+   	<form id="" action="" method="post">
+   		<input type="hidden" name="" value="${orderProductCommon}">
+	    <c:forEach var="order" items="${orderProductCommon}">
+	   		상품 정보
+	   		<button id="cartButton" type="button">1</button>+
+	   		<input type="hidden" name="productPrice${0}" value="계산된 값">
+	    </c:forEach>
+   		<input type="hidden" name="totalPrice" value="계산된 값">
+    	<button id="orderButton" type="button" onclick="javascript: optionForm.action='/manage/update';"/>주문</button>
+    	<button id="cartButton" type="button">장바구니</button>
+   	</form>
 </div>
 </body>
 </html>

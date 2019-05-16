@@ -1,6 +1,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cafe.jjdev.mall.mapper.ProductCommonMapper">
-	<resultMap type="cafe.jjdev.mall.vo.ProductCommon" id="ProductCommonMap">
+	<!-- 상품 색상별 사이즈 검색 -->
+	<select id="selectProductSizeByColor" parameterType="java.util.Map" resultType="int">
+		SELECT product_size
+		FROM product
+		WHERE product_common_no = #{productCommonNo}
+		AND product_color = #{productColor}
+		ORDER BY product_size ASC
+	</select>
+	<!-- 카테고리별 상품 갯수 -->
+	<select id="selectProductCommonCountByCategoryNo" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*)
+		FROM product_common
+		WHERE category_no = #{categoryNo}
+		<if test="searchWord != null">
+			AND product_common_name LIKE '%${searchWord}%'
+		</if>
+	</select>
+	<resultMap type="cafe.jjdev.mall.vo.ProductCommon" id="selectProductByProductCommonResultMap">
 		<result column="product_common_no" property="productCommonNo"/>
 		<result column="category_no" property="categoryNo"/>
 		<result column="product_common_name" property="productCommonName"/>
@@ -16,7 +33,7 @@
 		</collection>
 	</resultMap>
 	<!-- 2. 상품 상세보기 -->
-	<select id="selectProductByProductCommon" parameterType="int" resultMap="ProductCommonMap">
+	<select id="selectProductByProductCommon" parameterType="java.util.Map" resultMap="selectProductByProductCommonResultMap">
 		SELECT pc.product_common_no, 
 			pc.category_no, 
 			pc.product_common_name, 
@@ -48,14 +65,5 @@
 		</if>
 		ORDER BY product_common_date DESC
 		LIMIT #{beginRow}, #{rowPerPage}
-	</select>
-	<!-- 카테고리별 상품 갯수 -->
-	<select id="selectProductCommonCountByCategoryNo" parameterType="java.util.Map" resultType="int">
-		SELECT COUNT(*)
-		FROM product_common
-		WHERE category_no = #{categoryNo}
-		<if test="searchWord != null">
-			AND product_common_name LIKE '%${searchWord}%'
-		</if>
 	</select>
 </mapper>
