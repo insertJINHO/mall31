@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cafe.jjdev.mall.mapper.ProductCommonMapper;
 import cafe.jjdev.mall.vo.ProductCommon;
 
 @Service
+@Transactional
 public class ProductCommonService {
 	@Autowired
 	private ProductCommonMapper productCommonMapper;

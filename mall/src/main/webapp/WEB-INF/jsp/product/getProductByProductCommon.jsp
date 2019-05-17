@@ -17,6 +17,12 @@
 			console.log('productSize change 테스트');
 			$("#optionForm").submit();
 		});
+		$(document).keydown(function(event) {
+			if (event.keyCode == '116' || event.ctrlKey == true && (event.keyCode == '82' || event.keyCode == '116')) {
+				console.log('keydown 테스트');
+				location.href='/product/getProductByProductCommon?productCommonNo='+${productCommon.productCommonNo};
+			}
+		});
 	});
 </script>
 </head>
@@ -24,6 +30,7 @@
 <div class="container">
 	<div><a class="btn btn-dark" href="${pageContext.request.contextPath}/">홈으로</a></div>
     <h1>PRODUCT (spring mvc + mybatis 방식)</h1>
+	<!-- 상품 기본 정보 출력 -->
     <table class="table table-striped">
         <tr>
 			<th>product_common_name</th>
@@ -40,17 +47,24 @@
     </table>
     <form id="optionForm" action="${pageContext.request.contextPath}/product/getProductByProductCommon" method="get">
     	<input type="hidden" name="productCommonNo" value="${productCommon.productCommonNo}">
+		<!-- color, size 출력 -->
 		<div>
+			<!-- color 중복 값을 제거하기 위한 변수 -->
 			<c:set var="color" value="color"></c:set>
+			<!-- color 선택 -->
 			<select name="productColor" id="productColor">
 				<option value="">-[필수] Color 선택-</option>
+				<!-- color 출력 -->
 				<c:forEach var="product" items="${productCommon.products}" >
+					<!-- color 중복 값 제거 -->
 					<c:if test="${product.productColor ne color}">
+						<!-- color 출력 후 선택한 color 고정 -->
 	        			<option value="${product.productColor}" <c:if test="${productColor==product.productColor}">selected</c:if>>${product.productColor}</option>
 	        			<c:set var="color" value="${product.productColor}"></c:set>
 	        		</c:if>
 				</c:forEach>
 			</select>
+			<!-- size 출력 -->
 			<select name="productSize">
 				<option value="">-[필수] Size 선택-</option>
 				<c:forEach var="productSize" items="${productSize}" >

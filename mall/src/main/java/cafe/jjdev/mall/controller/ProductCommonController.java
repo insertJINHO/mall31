@@ -34,8 +34,8 @@ public class ProductCommonController {
 		List<Integer> productSize = productCommonService.getProductSizeByColor(map);
 		System.out.println("ProductCommonController.getProductByProductCommon GET productSize : "+productSize);
 		model.addAttribute("productCommon", productCommon); // 상품의 기본 정보
-		model.addAttribute("productColor", productColor);	// 컬러 옵션 select box에서 중복 값을 제거하기 위한 값
-		model.addAttribute("productSize", productSize);
+		model.addAttribute("productColor", productColor);	// 컬러 옵션 select box에서 중복 값을 제거하기 위한 값(매개변수)
+		model.addAttribute("productSize", productSize); // 색상별로 검색된 사이즈
 		return "/product/getProductByProductCommon";
 	}
 	// 카테고리별 상품 리스트, 검색
